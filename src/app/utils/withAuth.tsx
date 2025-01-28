@@ -11,7 +11,7 @@ interface IWithAuthProps {
 const withAuth = <P extends object>(
   WrappedComponent: React.ComponentType<P>,
   isSignInOrSignUp: boolean = false
-) => {
+): React.FC<P & IWithAuthProps> => {
   const RequiresAuth: React.FC<P & IWithAuthProps> = (props) => {
     const {
       isAuthenticated,
