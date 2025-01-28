@@ -8,7 +8,7 @@ export async function POST(req: NextRequest) {
 
   const body = await req.json();
 
-  return new Promise((resolve) => {
+  return new Promise<NextResponse>((resolve, reject) => {
     passport.authenticate("local", (err: any, user: any, info: any) => {
       if (err || !user) {
         return resolve(
