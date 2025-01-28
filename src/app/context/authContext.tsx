@@ -32,6 +32,7 @@ interface IAuthContextType {
   userLogOut: () => void;
   verifyUser: () => void;
   isAuthLoading: boolean;
+  session: any;
 }
 
 export const AuthContext = createContext<IAuthContextType | undefined>(
@@ -141,8 +142,9 @@ function AuthProvider({ children }: IAuthProviderProps) {
       userLogOut,
       verifyUser,
       isAuthLoading,
+      session,
     }),
-    [isAuthenticated, userDetails, isAuthLoading]
+    [isAuthenticated, userDetails, isAuthLoading, session]
   );
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;

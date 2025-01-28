@@ -1,5 +1,5 @@
 import { useEffect, useState, ComponentType } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 import { useAuthContext } from "@/app/context/authContext";
 import Loader from "../components/common/Loader";
@@ -13,29 +13,40 @@ const withAuth = (
   isSignInOrSignUp: boolean
 ): ComponentType<TWrappedComponentProps> => {
   const RequiresAuth: React.FC<TWrappedComponentProps> = (props) => {
-    const { isAuthenticated, isAuthLoading } = useAuthContext();
+    const { isAuthenticated, isAuthLoading, session } = useAuthContext();
     const router = useRouter();
-    const [isClient, setIsClient] = useState(false);
+    const [isAuthChecked, setIsAuthChecked] = useState(false);
+    const pathname = usePathname();
+    const isDashboardPage = pathname === "/dashboard";
 
     useEffect(() => {
-      setIsClient(true);
-    }, []);
+      if (!isAuthLoading) {
+        setTimeout(() => {
+          setIsAuthChecked(true);
+        }, 500);
+      }
+    }, [isAuthLoading]);
 
     useEffect(() => {
-      if (!isClient || isAuthLoading) return;
-
-      if (isAuthenticated) {
-        if (isSignInOrSignUp) {
-          router.replace("/dashboard");
-        }
-      } else {
-        if (!isSignInOrSignUp) {
-          router.replace("/signIn");
+      if (isAuthChecked) {
+        if (isAuthenticated) {
+          if (isSignInOrSignUp) {
+            router.replace("/dashboard");
+          }
+        } else {
+          if (!isSignInOrSignUp && !session?.accessToken) {
+            router.replace("/signIn");
+          }
         }
       }
-    }, [isAuthenticated, isClient, isSignInOrSignUp, isAuthLoading, router]);
+    }, [isAuthenticated, isAuthChecked, isSignInOrSignUp, router]);
 
-    if (!isClient || isAuthLoading || (isSignInOrSignUp && isAuthenticated)) {
+    if (
+      (isDashboardPage && !isAuthenticated) ||
+      isAuthLoading ||
+      !isAuthChecked ||
+      (isSignInOrSignUp && isAuthenticated)
+    ) {
       return (
         <div className="flex justify-center items-center h-screen">
           <Loader className="border-blue-500" />
