@@ -124,8 +124,8 @@ function AuthProvider({ children }: IAuthProviderProps) {
   }, [session, accessToken]);
 
   const userLogOut = () => {
-    signOut({ callbackUrl: "/", redirect: true });
     localStorage.removeItem("access_token");
+    signOut({ callbackUrl: "/", redirect: true });
     router.push("/");
   };
 
