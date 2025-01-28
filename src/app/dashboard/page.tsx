@@ -31,4 +31,6 @@ const Dashboard = () => {
   );
 };
 
-export default withAuth(Dashboard, false);
+const DashboardWithAuth = withAuth(Dashboard, false);
+
+export default DashboardWithAuth;

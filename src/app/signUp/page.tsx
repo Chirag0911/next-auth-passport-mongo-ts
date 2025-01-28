@@ -27,7 +27,7 @@ const initialData: IUserDetails = {
   confirmPassword: "",
 };
 
-const Signup = () => {
+const SignUp = () => {
   const router = useRouter();
   const [userDetails, setUserDetails] = useState<IUserDetails>({
     ...initialData,
@@ -198,4 +198,6 @@ const Signup = () => {
   );
 };
 
-export default withAuth(Signup, true);
+const SignUpWithAuth = withAuth(SignUp, true);
+
+export default SignUpWithAuth;

@@ -180,4 +180,6 @@ const SignIn = () => {
   );
 };
 
-export default withAuth(SignIn, true);
+const SingInWithAuth = withAuth(SignIn, true);
+
+export default SingInWithAuth;
