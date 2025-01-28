@@ -124,10 +124,12 @@ function AuthProvider({ children }: IAuthProviderProps) {
     }
   }, [session, accessToken]);
 
-  const userLogOut = () => {
-    localStorage.removeItem("access_token");
-    signOut({ callbackUrl: "/", redirect: true });
-    router.push("/");
+  const userLogOut = async () => {
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("access_token");
+      await signOut({ callbackUrl: "/", redirect: true });
+      router.push("/");
+    }
   };
 
   const values = useMemo<IAuthContextType>(
