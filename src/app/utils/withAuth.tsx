@@ -1,22 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, ComponentType } from "react";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { useAuthContext } from "@/app/context/authContext";
 import Loader from "../components/common/Loader";
 
-interface IWithAuthProps {
-  isSignInOrSignUp: boolean;
-}
+type TWrappedComponentProps = {};
 
-const withAuth = <P extends object>(
-  WrappedComponent: React.ComponentType<P>,
-  isSignInOrSignUp: boolean = false
-): React.FC<P & IWithAuthProps> => {
-  const RequiresAuth: React.FC<P & IWithAuthProps> = (props) => {
-    const {
-      isAuthenticated,
-      isAuthLoading,
-    }: { isAuthenticated: boolean; isAuthLoading: boolean } = useAuthContext();
+type TWrappedComponentType = ComponentType<TWrappedComponentProps>;
+
+const withAuth = (
+  WrappedComponent: TWrappedComponentType,
+  isSignInOrSignUp: boolean
+): ComponentType<TWrappedComponentProps> => {
+  const RequiresAuth: React.FC<TWrappedComponentProps> = (props) => {
+    const { isAuthenticated, isAuthLoading } = useAuthContext();
     const router = useRouter();
     const [isClient, setIsClient] = useState(false);
 

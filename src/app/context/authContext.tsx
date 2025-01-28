@@ -1,3 +1,5 @@
+"use client";
+
 import React, {
   useState,
   useEffect,
@@ -60,7 +62,13 @@ function AuthProvider({ children }: IAuthProviderProps) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isAuthLoading, setIsAuthLoading] = useState(false);
   const { data: session }: any = useSession();
-  const accessToken = localStorage.getItem("access_token");
+  let accessToken = "";
+  if (
+    typeof window !== "undefined" &&
+    typeof window.localStorage !== "undefined"
+  ) {
+    accessToken = localStorage.getItem("access_token") as string;
+  }
 
   const verifyUser = async () => {
     try {
