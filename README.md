@@ -26,7 +26,7 @@ This is a Next.js app that uses Tailwind CSS, Passport.js for local authenticati
 ## Setup
 
 ```
-git clone https://github.com/your-username/nextjs-auth-app.git
+git clone https://github.com/Chirag0911/Esplanda.git
 cd nextjs-auth-app
 yarn install
 yarn dev
