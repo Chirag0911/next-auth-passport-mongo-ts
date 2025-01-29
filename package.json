@@ -1,5 +1,5 @@
 {
-  "name": "unified-next-auth-passport",
+  "name": "next-auth-passport-mongo-ts",
   "version": "0.1.0",
   "private": true,
   "scripts": {
