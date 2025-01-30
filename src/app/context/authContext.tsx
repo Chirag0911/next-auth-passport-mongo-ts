@@ -111,6 +111,9 @@ function AuthProvider({ children }: IAuthProviderProps) {
         email: "",
       });
       setIsAuthenticated(false);
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("access_token");
+      }
     }
     setIsAuthLoading(false);
   };
